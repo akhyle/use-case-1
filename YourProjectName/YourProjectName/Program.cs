@@ -14,6 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<ICountryHandler, CountryHandler>();
+builder.Services.AddTransient<IHttpClientWrapper, HttpClientWrapper>();
 
 var app = builder.Build();
 
