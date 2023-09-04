@@ -10,13 +10,10 @@ namespace YourProjectName.Controllers
     public class PublicController : ControllerBase
     {
         private readonly ICountryHandler _countryHandler;
-        private readonly ILogger<PublicController> _logger;
 
         public PublicController(
-            ILogger<PublicController> logger,
             ICountryHandler countryHandler)
         {
-            _logger = logger;
             _countryHandler = countryHandler;
         }
 

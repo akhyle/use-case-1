@@ -94,8 +94,8 @@ namespace UseCase.ApplicationTests
 
             var result = await _sut.GetCountryList("rgenTina", 10, "descend", 3);
 
-            Assert.IsNotNull(result);
-            Assert.That(result.Count, Is.EqualTo(3));
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Has.Count.EqualTo(3));
             Assert.That(result.First().name.common, Is.EqualTo("Drgentina"));
         }
 
@@ -106,8 +106,8 @@ namespace UseCase.ApplicationTests
 
             var result = await _sut.GetCountryList(null, null, null, null);
 
-            Assert.IsNotNull(result);
-            Assert.That(result.Count, Is.EqualTo(_countries.Count));
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Has.Count.EqualTo(_countries.Count));
         }
     }
 }
