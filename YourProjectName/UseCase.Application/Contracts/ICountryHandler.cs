@@ -9,6 +9,7 @@ namespace UseCase.Application.Contracts
 {
     public interface ICountryHandler
     {
-        Task<List<Country>> GetCountryList();
+        Task<List<Country>> GetCountryList(
+            string CountryName);
     }
 }

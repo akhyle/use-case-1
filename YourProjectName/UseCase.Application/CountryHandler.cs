@@ -8,25 +8,35 @@ namespace UseCase.Application
 {
     public class CountryHandler : ICountryHandler
     {
-        public async Task<List<Country>> GetCountryList()
+        private const string BaseAddress = "https://restcountries.com/v3.1/";
+        private readonly HttpClient _httpClient;
+
+        public CountryHandler()
         {
-            using var client = new HttpClient();
+            _httpClient = new HttpClient();
+            _httpClient.BaseAddress = new Uri(BaseAddress);
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
 
-            client.BaseAddress = new Uri("https://restcountries.com/v3.1/");
+        public async Task<List<Country>> GetCountryList(
+            string countryName)
+        {
+            var initialList = await GetInitialList();
 
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
+            return initialList.FilterByName(countryName).ToList();
+        }
 
-            var response = await client.GetAsync("all");
+        private async Task<IEnumerable<Country>> GetInitialList()
+        {
+            var response = await _httpClient.GetAsync("all");
 
-            if (response.IsSuccessStatusCode)
-            {
-                var stringContent = await response.Content.ReadAsStringAsync();
-                var dataObjects = JsonConvert.DeserializeObject<List<Country>>(stringContent);
-                return dataObjects;
-            }
+            if (!response.IsSuccessStatusCode)
+                throw new Exception();
 
-            return new List<Country>();
+            var stringContent = await response.Content.ReadAsStringAsync();
+            var dataObjects = JsonConvert.DeserializeObject<List<Country>>(stringContent);
+
+            return dataObjects ?? throw new Exception();
         }
     }
 }

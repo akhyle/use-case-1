@@ -20,9 +20,10 @@ namespace YourProjectName.Controllers
 
         [HttpGet("get-paginated-list")]
         public async Task<IActionResult> GetPaginatedList(
-            [FromQuery] string? arg1, int? arg2, string? arg3, string? arg4)
+            [FromQuery] string? countryName, int? arg2, string? arg3, string? arg4)
         {
-            var countries = await _countryHandler.GetCountryList();
+            var countries = await _countryHandler.GetCountryList(
+                countryName);
 
             return Ok(countries);
         }
