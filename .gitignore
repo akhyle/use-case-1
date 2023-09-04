@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/YourProjectName/YourProjectName/obj
+/.vs/use-case-1/FileContentIndex
+/.vs/use-case-1/v17
+/.vs
+/YourProjectName/.vs/YourProjectName
+/YourProjectName/UseCase.Application/obj
+/YourProjectName/UseCase.Domain/obj
+/YourProjectName/YourProjectName/bin/Debug/net6.0
+/YourProjectName/UseCase.Domain/bin/Debug/net6.0
+/YourProjectName/UseCase.Application/bin/Debug/net6.0
