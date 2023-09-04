@@ -19,11 +19,15 @@ namespace UseCase.Application
         }
 
         public async Task<List<Country>> GetCountryList(
-            string countryName)
+            string countryName,
+            int? populationInMillions)
         {
             var initialList = await GetInitialList();
 
-            return initialList.FilterByName(countryName).ToList();
+            return initialList
+                .FilterByName(countryName)
+                .FilterByPopulation(populationInMillions)
+                .ToList();
         }
 
         private async Task<IEnumerable<Country>> GetInitialList()
@@ -31,12 +35,12 @@ namespace UseCase.Application
             var response = await _httpClient.GetAsync("all");
 
             if (!response.IsSuccessStatusCode)
-                throw new Exception();
+                throw new HttpRequestException();
 
             var stringContent = await response.Content.ReadAsStringAsync();
             var dataObjects = JsonConvert.DeserializeObject<List<Country>>(stringContent);
 
-            return dataObjects ?? throw new Exception();
+            return dataObjects ?? throw new NullReferenceException();
         }
     }
 }

@@ -17,5 +17,25 @@ namespace UseCase.Application
             return source.Where(x =>
                 x.name.common.Contains(name, StringComparison.OrdinalIgnoreCase));
         }
+
+        internal static IEnumerable<Country> FilterByPopulation(this IEnumerable<Country> source, int? millionPpl)
+        {
+            if (millionPpl is null)
+                return source;
+
+            return source.Where(x => ComparePopulation(x.population, millionPpl.Value));
+        }
+
+        private static bool ComparePopulation(string source, int request)
+        {
+            var populationAvailable = int.TryParse(source, out var providedPopulation);
+
+            if (!populationAvailable)
+                return false;
+
+            var providedPopulationInMillions = Math.Floor((double)providedPopulation / 1000000);
+
+            return providedPopulationInMillions < request;
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using UseCase.Application.Contracts;
 
 namespace YourProjectName.Controllers
@@ -20,10 +22,10 @@ namespace YourProjectName.Controllers
 
         [HttpGet("get-paginated-list")]
         public async Task<IActionResult> GetPaginatedList(
-            [FromQuery] string? countryName, int? arg2, string? arg3, string? arg4)
+            [FromQuery] string? countryName, int? populationInMillions, string? arg3, string? arg4)
         {
             var countries = await _countryHandler.GetCountryList(
-                countryName);
+                countryName, populationInMillions);
 
             return Ok(countries);
         }

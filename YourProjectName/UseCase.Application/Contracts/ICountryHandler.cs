@@ -10,6 +10,7 @@ namespace UseCase.Application.Contracts
     public interface ICountryHandler
     {
         Task<List<Country>> GetCountryList(
-            string CountryName);
+            string countryName,
+            int? populationInMillions);
     }
 }
