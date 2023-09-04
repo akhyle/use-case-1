@@ -26,6 +26,23 @@ namespace UseCase.Application
             return source.Where(x => ComparePopulation(x.population, millionPpl.Value));
         }
 
+        internal static IEnumerable<Country> OrderByName(this IEnumerable<Country> source, string direction)
+        {
+            const string Ascend = nameof(Ascend);
+            const string Descend = nameof(Descend);
+
+            if (direction is null)
+                return source;
+
+            if (string.Equals(direction, Ascend, StringComparison.OrdinalIgnoreCase))
+                return source.OrderBy(x => x.name.common);
+
+            if(string.Equals(direction, Descend, StringComparison.OrdinalIgnoreCase))
+                return source.OrderByDescending(x => x.name.common);
+
+            return source;
+        }
+
         private static bool ComparePopulation(string source, int request)
         {
             var populationAvailable = int.TryParse(source, out var providedPopulation);

@@ -11,6 +11,7 @@ namespace UseCase.Application.Contracts
     {
         Task<List<Country>> GetCountryList(
             string countryName,
-            int? populationInMillions);
+            int? populationInMillions,
+            string sortDirection);
     }
 }

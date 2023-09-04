@@ -12,3 +12,6 @@
 /YourProjectName/YourProjectName/bin/Debug/net6.0
 /YourProjectName/UseCase.Domain/bin/Debug/net6.0
 /YourProjectName/UseCase.Application/bin/Debug/net6.0
+/YourProjectName/UseCase.ApplicationTests/bin
+/YourProjectName/UseCase.ApplicationTests/obj/Debug/net6.0
+/YourProjectName/UseCase.ApplicationTests/obj

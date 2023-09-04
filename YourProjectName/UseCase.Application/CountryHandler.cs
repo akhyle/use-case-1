@@ -8,39 +8,25 @@ namespace UseCase.Application
 {
     public class CountryHandler : ICountryHandler
     {
-        private const string BaseAddress = "https://restcountries.com/v3.1/";
-        private readonly HttpClient _httpClient;
+        private readonly IHttpClientWrapper _httpClientWrapper;
 
-        public CountryHandler()
+        public CountryHandler(IHttpClientWrapper httpClientwrapper)
         {
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri(BaseAddress);
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClientWrapper = httpClientwrapper;
         }
 
         public async Task<List<Country>> GetCountryList(
             string countryName,
-            int? populationInMillions)
+            int? populationInMillions,
+            string sortDirection)
         {
-            var initialList = await GetInitialList();
+            var initialList = await _httpClientWrapper.GetInitialList();
 
             return initialList
                 .FilterByName(countryName)
                 .FilterByPopulation(populationInMillions)
+                .OrderByName(sortDirection)
                 .ToList();
-        }
-
-        private async Task<IEnumerable<Country>> GetInitialList()
-        {
-            var response = await _httpClient.GetAsync("all");
-
-            if (!response.IsSuccessStatusCode)
-                throw new HttpRequestException();
-
-            var stringContent = await response.Content.ReadAsStringAsync();
-            var dataObjects = JsonConvert.DeserializeObject<List<Country>>(stringContent);
-
-            return dataObjects ?? throw new NullReferenceException();
         }
     }
 }
