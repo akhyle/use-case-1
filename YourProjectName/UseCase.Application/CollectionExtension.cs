@@ -43,6 +43,14 @@ namespace UseCase.Application
             return source;
         }
 
+        internal static IEnumerable<Country> TakeFromStart(this IEnumerable<Country> source, int? numberToTake)
+        {
+            if (numberToTake is null)
+                return source;
+
+            return source.Take(numberToTake.Value);
+        }
+
         private static bool ComparePopulation(string source, int request)
         {
             var populationAvailable = int.TryParse(source, out var providedPopulation);

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UseCase.Domain;
+﻿using UseCase.Domain;
 
 namespace UseCase.Application.Contracts
 {
@@ -12,6 +7,7 @@ namespace UseCase.Application.Contracts
         Task<List<Country>> GetCountryList(
             string countryName,
             int? populationInMillions,
-            string sortDirection);
+            string sortDirection,
+            int? take);
     }
 }

@@ -51,6 +51,14 @@ namespace UseCase.ApplicationTests
                 {
                     name = new Name()
                     {
+                        common = "Drgentina"
+                    },
+                    population = "8000000"
+                },
+                new Country()
+                {
+                    name = new Name()
+                    {
                         common = "Croatia"
                     },
                     population = "12000000"
@@ -83,11 +91,11 @@ namespace UseCase.ApplicationTests
 
             _httpClient.GetInitialList().Returns(initialList);
 
-            var result = await _sut.GetCountryList("rgenTina", 10, "descend");
+            var result = await _sut.GetCountryList("rgenTina", 10, "descend", 3);
 
             Assert.IsNotNull(result);
             Assert.That(result.Count, Is.EqualTo(3));
-            Assert.That(result.First().name.common, Is.EqualTo("Crgentina"));
+            Assert.That(result.First().name.common, Is.EqualTo("Drgentina"));
         }
     }
 }
