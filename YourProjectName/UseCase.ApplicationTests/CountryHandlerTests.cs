@@ -9,6 +9,7 @@ namespace UseCase.ApplicationTests
     {
         private IHttpClientWrapper _httpClient;
         private ICountryHandler _sut;
+        private static List<Country> _countries;
 
         [SetUp]
         public void Setup()
@@ -16,12 +17,8 @@ namespace UseCase.ApplicationTests
             _httpClient = Substitute.For<IHttpClientWrapper>();
 
             _sut = new CountryHandler(_httpClient);
-        }
 
-        [Test]
-        public async Task GetCountryList_FiltersListProperly_WhenInputIsCorrect()
-        {
-            var initialList = new List<Country>()
+            _countries = new List<Country>()
             {
                 new Country()
                 {
@@ -88,14 +85,29 @@ namespace UseCase.ApplicationTests
                     population = "15000000"
                 },
             };
+        }
 
-            _httpClient.GetInitialList().Returns(initialList);
+        [Test]
+        public async Task GetCountryList_FiltersListProperly_WhenInputIsCorrect()
+        {
+            _httpClient.GetInitialList().Returns(_countries);
 
             var result = await _sut.GetCountryList("rgenTina", 10, "descend", 3);
 
             Assert.IsNotNull(result);
             Assert.That(result.Count, Is.EqualTo(3));
             Assert.That(result.First().name.common, Is.EqualTo("Drgentina"));
+        }
+
+        [Test]
+        public async Task GetCountryList_ReturnsCompleteList_WhenInputIsCorrect()
+        {
+            _httpClient.GetInitialList().Returns(_countries);
+
+            var result = await _sut.GetCountryList(null, null, null, null);
+
+            Assert.IsNotNull(result);
+            Assert.That(result.Count, Is.EqualTo(_countries.Count));
         }
     }
 }

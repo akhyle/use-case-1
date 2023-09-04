@@ -16,9 +16,9 @@ namespace UseCase.Application
         }
 
         public async Task<List<Country>> GetCountryList(
-            string countryName,
+            string? countryName,
             int? populationInMillions,
-            string sortDirection,
+            string? sortDirection,
             int? take)
         {
             var initialList = await _httpClientWrapper.GetInitialList();
