@@ -109,5 +109,16 @@ namespace UseCase.ApplicationTests
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Has.Count.EqualTo(_countries.Count));
         }
+
+        [Test]
+        public async Task GetCountryList_removesPopulationGreaterThan_WhenInputIsCorrect()
+        {
+            _httpClient.GetInitialList().Returns(_countries);
+
+            var result = await _sut.GetCountryList(null, 10, null, null);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(!result.Any(c => int.Parse(c.population) > 10000000));
+        }
     }
 }
